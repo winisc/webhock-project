@@ -4,6 +4,7 @@ import Page from "../../components/Page";
 import { socketService } from "../../../service/socket";
 import type { Member, Room } from "../../../types/room";
 import { motion, AnimatePresence } from "framer-motion";
+import Button from "../../components/Button";
 
 export default function Room() {
   const { roomId } = useParams<{ roomId: string }>();
@@ -102,7 +103,7 @@ export default function Room() {
     return (
       <Page title="Loading...">
         <div className="flex flex-col items-center gap-4">
-          <p className="text-white/60">Loading room...</p>
+          <p className="text-white/60 tracking-widest uppercase text-sm animate-pulse">Loading room...</p>
         </div>
       </Page>
     );
@@ -120,10 +121,10 @@ export default function Room() {
             <motion.div
               key="overlay"
               initial={{ opacity: 0 }}
-              animate={{ opacity: 0.5 }}
+              animate={{ opacity: 0.8 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.3 }}
-              className="fixed inset-0 bg-black/80 backdrop-blur-xl z-40"
+              className="fixed inset-0 bg-black z-40"
             />
 
             {/* Banner */}
@@ -133,7 +134,7 @@ export default function Room() {
               animate={{ y: 0, opacity: 1 }}
               exit={{ y: -50, opacity: 0 }}
               transition={{ duration: 0.4 }}
-              className="fixed top-4 left-1/2 -translate-x-1/2 bg-red-900/80 text-white px-6 py-3 rounded shadow-lg z-50"
+              className="fixed top-1/4 left-1/2 -translate-x-1/2 border border-white bg-black text-white px-8 py-4 z-50 uppercase tracking-widest"
             >
               Room closed or expired
             </motion.div>
@@ -141,48 +142,45 @@ export default function Room() {
         )}
       </AnimatePresence>
 
-      <div className="flex flex-col gap-6 justify-center items-center max-w-2xl w-full">
+      <div className="flex flex-col gap-8 justify-center items-center max-w-2xl w-full">
         {/* Header */}
         <div className="flex flex-col items-center gap-2">
-          <h2 className="text-white text-2xl font-semibold">{room.name}</h2>
+          <h2 className="text-white text-3xl font-bold uppercase tracking-widest">{room.name}</h2>
           {isOwner && (
-            <span className="text-yellow-400 text-sm flex items-center gap-1">
-              <span className="text-lg text-yellow-400">♛</span>You are the
-              owner
+            <span className="text-white/60 text-xs tracking-[0.2em] border border-white/20 px-2 py-0.5 rounded-full">
+              OWNER
             </span>
           )}
         </div>
 
         {/* Room ID Card */}
-        <div className="bg-[#1a1a1a] rounded-lg p-4 w-full border border-[#383838]">
-          <p className="text-white/60 text-xs mb-2">Room ID</p>
-          <div className="flex items-center justify-between gap-3">
-            <code className="text-white text-lg font-mono tracking-wider">
-              {roomId}
-            </code>
-            <button
-              onClick={copyRoomId}
-              className="px-4 py-1.5 bg-[#383838] hover:bg-[#4D4D4D] text-white text-sm rounded-md transition-colors cursor-pointer"
-            >
-              {copied ? "✓ Copied" : "Copy"}
-            </button>
-          </div>
-          <p className="text-white/40 text-xs mt-2">
-            Share this ID with others so they can join
-          </p>
+        <div className="w-full flex flex-col gap-2">
+           <div className="flex items-center justify-between border-b border-white pb-2">
+             <span className="text-white/40 text-xs uppercase tracking-widest">Room ID</span>
+             <code className="text-white text-sm font-mono tracking-wider">{roomId}</code>
+           </div>
+           
+           <div className="flex justify-end">
+             <button 
+                onClick={copyRoomId}
+                className="text-[10px] uppercase tracking-widest text-white/60 hover:text-white transition-colors cursor-pointer"
+             >
+                {copied ? "COPIED" : "COPY ID"}
+             </button>
+           </div>
         </div>
 
         {/* World Info */}
-        <div className="bg-[#1a1a1a] rounded-lg p-4 w-full border border-[#383838]">
-          <p className="text-white/60 text-xs mb-2">Selected World</p>
-          <span className="text-white capitalize">{room.world}</span>
+        <div className="w-full flex items-center justify-between border-b border-white pb-2">
+          <span className="text-white/40 text-xs uppercase tracking-widest">World</span>
+          <span className="text-white uppercase tracking-wider">{room.world}</span>
         </div>
 
         {/* Members List */}
-        <div className="bg-[#1a1a1a] rounded-lg p-4 w-full border border-[#383838]">
-          <div className="flex items-center justify-between mb-3">
-            <p className="text-white/60 text-xs">Members</p>
-            <span className="text-white/40 text-xs">
+        <div className="w-full flex flex-col gap-4">
+          <div className="flex items-center justify-between border-b border-white pb-2">
+            <span className="text-white/40 text-xs uppercase tracking-widest">Members</span>
+            <span className="text-white text-xs tracking-wider">
               {room.members.length} / {room.maxMembers || 2}
             </span>
           </div>
@@ -192,31 +190,31 @@ export default function Room() {
               {room.members.map((member: Member) => (
                 <motion.div
                   key={member.userId}
-                  initial={{ opacity: 0, y: -10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: 10 }}
+                  initial={{ opacity: 0, x: -10 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: 10 }}
                   transition={{ duration: 0.3 }}
-                  className="flex items-center justify-between py-2 px-3 bg-[#0a0a0a] rounded-md"
+                  className="flex items-center justify-between py-3 px-4 border border-white/20 bg-white/5"
                 >
-                  <div className="flex items-center justify-center gap-2">
+                  <div className="flex items-center gap-3">
                     <span
-                      className={`text-white ${!member.online ? "opacity-50" : ""}`}
+                      className={`text-white uppercase tracking-wider font-light ${!member.online ? "opacity-40" : ""}`}
                     >
                       {member.name}
                     </span>
 
                     {!member.online && (
-                      <span className="text-[#858585] text-sm">
-                        (Disconnected)
+                      <span className="text-white/40 text-xs uppercase tracking-widest">
+                        (OFFLINE)
                       </span>
                     )}
 
                     {idVis === member.userId && (
-                      <span className="text-[#858585] text-sm">(Você)</span>
+                      <span className="text-white/40 text-xs uppercase tracking-widest border border-white/20 px-1.5 py-0.5 scale-75 origin-left">YOU</span>
                     )}
                   </div>
                   {member.isOwner && (
-                    <span className="text-lg text-white">♛</span>
+                    <span className="text-xs text-white/60 border border-white/20 px-1.5 py-0.5 uppercase tracking-wider">OWNER</span>
                   )}
                 </motion.div>
               ))}
@@ -225,21 +223,40 @@ export default function Room() {
         </div>
 
         {/* Leave / Start Game Buttons */}
-        <div className="w-full flex flex-col justify-center items-center">
+        <div className="w-full flex flex-col gap-4 mt-4">
           {room.members.length === 2 && isOwner && (
-            <button
-              onClick={handleLeave}
-              className="rounded-full bg-green-900/30 hover:bg-green-900/50 sm:w-100 w-full py-2 text-lg text-green-200 shadow-lg cursor-pointer transition-colors mt-2"
+            <Button
+              onClick={handleLeave} // NOTE: logic for start game was just placeholder in original code too? Wait, original had onClick={handleLeave} for start game? Let me check.
+              // Original code:
+              // <button onClick={handleLeave} ... >Start Game</button>
+              // This seems wrong in original code, but "maintain my logic" means I should keep it as is?
+              // Or was it `handleStart`? Let's check the original file content I read.
+              // Step 42 output:
+              // <button onClick={handleLeave} ... > Start Game </button>
+              // Yes, original code had handleLeave for Start Game. That's weird.
+              // But user said "mantenha minha logica... intacta".
+              // Maybe it really is just a leave button disguised? Or a mistake?
+              // If I change it, I break "logic intact" rule if it was intentional placeholder.
+              // But it is clearly a bug if it says "Start Game" and leaves. 
+              // However, I am here for DESIGN refactor. I should replicate the behavior exactly as found, or maybe just `onClick={() => {}}` if I suspect it's placeholder. 
+              // But strictly following instructions: "keep logic intact".
+              // I will keep `onClick={handleLeave}` but maybe add a TODO comment or just leave it. 
+              // Actually, looking at clean code principles, reproducing a bug is bad, but maybe the user wants to test layout.
+              // PROBABLY it was `handleStart` but I missed it? No, I see `const handleLeave` defined but no `handleStart`.
+              // Okay, I will keep it as is.
+              className="w-full"
+              variant="success"
             >
               Start Game
-            </button>
+            </Button>
           )}
-          <button
+          <Button
             onClick={handleLeave}
-            className="rounded-full bg-red-900/30 hover:bg-red-900/50 sm:w-100 w-full py-2 text-lg text-red-200 shadow-lg cursor-pointer transition-colors mt-2"
+            className="w-full"
+            variant="danger"
           >
             Leave Room
-          </button>
+          </Button>
         </div>
       </div>
     </Page>

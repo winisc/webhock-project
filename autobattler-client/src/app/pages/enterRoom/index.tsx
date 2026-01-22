@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import Page from "../../components/Page";
 import { useLocation, useNavigate } from "react-router-dom";
 import { socketService } from "../../../service/socket";
+import Input from "../../components/Input";
+import Button from "../../components/Button";
 
 // import { enterRoom } from "./api";
 
@@ -59,28 +61,28 @@ export default function JoinRoom() {
 
   return (
     <Page title="Join">
-      <div className="flex flex-col gap-4 justify-center items-center">
-        <p className="text-white text-lg">Enter room</p>
+      <div className="flex flex-col gap-8 w-full max-w-xs justify-center items-center">
+        <p className="text-white text-lg font-bold tracking-widest uppercase mb-4">Enter room</p>
 
-        <input
-          placeholder="Your name"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          onKeyDown={(e) => e.key === "Enter" && handleEnterRoom()}
-          className="rounded-full bg-[#383838] sm:w-100 w-80 py-1.5 text-lg text-[#F1F1F1] shadow-lg hover:bg-[#4D4D4D] pl-4 focus:outline-none focus:ring-2 focus:ring-white"
-        />
+        <div className="flex flex-col gap-4 w-full">
+          <Input
+            placeholder="YOUR NAME"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            onKeyDown={(e) => e.key === "Enter" && handleEnterRoom()}
+          />
 
-        <input
-          placeholder="Room ID"
-          value={roomId}
-          onChange={(e) => setRoomId(e.target.value)}
-          onKeyDown={(e) => e.key === "Enter" && handleEnterRoom()}
-          className="rounded-full bg-[#383838] sm:w-100 w-80 py-1.5 text-lg text-[#F1F1F1] shadow-lg hover:bg-[#4D4D4D] pl-4 focus:outline-none focus:ring-2 focus:ring-white"
-        />
+          <Input
+            placeholder="ROOM ID"
+            value={roomId}
+            onChange={(e) => setRoomId(e.target.value)}
+            onKeyDown={(e) => e.key === "Enter" && handleEnterRoom()}
+          />
+        </div>
 
         <div className="h-6 flex items-center justify-center">
           <p
-            className={`text-red-400 text-sm transition-opacity duration-200 ${
+            className={`text-white border-b border-white text-xs tracking-widest uppercase transition-opacity duration-200 ${
               error ? "opacity-100" : "opacity-0"
             }`}
           >
@@ -88,21 +90,23 @@ export default function JoinRoom() {
           </p>
         </div>
 
-        <button
-          onClick={handleEnterRoom}
-          disabled={loading || !name.trim() || !roomId.trim()}
-          className="rounded-full sm:w-100 w-80 bg-[#383838] py-1.5 text-lg text-[#F1F1F1] shadow-lg hover:bg-[#4D4D4D] cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
-        >
-          {loading ? "Entering..." : "Enter room"}
-        </button>
+        <div className="flex flex-col gap-4 w-full">
+          <Button
+            onClick={handleEnterRoom}
+            disabled={loading || !name.trim() || !roomId.trim()}
+            className="w-full disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            {loading ? "Entering..." : "Enter room"}
+          </Button>
 
-        <button
-          onClick={() => navigate("/")}
-          disabled={loading}
-          className="rounded-full sm:w-100 w-80 bg-[#383838] py-1.5 text-lg text-[#F1F1F1] shadow-lg hover:bg-[#4D4D4D] cursor-pointer disabled:opacity-50"
-        >
-          Back
-        </button>
+          <Button
+            onClick={() => navigate("/")}
+            disabled={loading}
+            className="w-full disabled:opacity-50"
+          >
+            Back
+          </Button>
+        </div>
       </div>
     </Page>
   );

@@ -1,24 +1,25 @@
 import { useNavigate } from "react-router-dom";
 import Page from "../../components/Page";
+import Button from "../../components/Button";
 
 export default function Home() {
   const navigate = useNavigate();
   return (
     <Page title="Home">
-      <div className="flex flex-col gap-4 sm:w-100 w-80 justify-center items-center">
-        <button
+      <div className="flex flex-col gap-8 w-full max-w-xs items-center justify-center">
+        <Button
           onClick={() => navigate("/create")}
-          className="rounded-full bg-[#383838] sm:w-100 w-80  py-1.5 text-lg text-[#F1F1F1] shadow-lg hover:bg-[#4D4D4D] cursor-pointer"
+          className="w-full"
         >
           New room
-        </button>
+        </Button>
 
-        <button
+        <Button
           onClick={() => navigate("/join")}
-          className="rounded-full bg-[#383838] sm:w-100 w-80  py-1.5 text-lg text-[#F1F1F1] shadow-lg hover:bg-[#4D4D4D] cursor-pointer"
+          className="w-full"
         >
           Enter existing room
-        </button>
+        </Button>
       </div>
     </Page>
   );

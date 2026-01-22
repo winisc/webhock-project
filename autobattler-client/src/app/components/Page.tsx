@@ -19,10 +19,12 @@ export default function Page({ children, title }: PageProps) {
   }, [title]);
 
   return (
-    <div className="relative h-dvh w-screen flex flex-col items-center justify-center bg-[#0F0F0F] px-6 py-4">
+    <div className="relative min-h-screen w-full flex flex-col items-center justify-center bg-black text-white px-6 py-4 overflow-x-hidden">
       <Header />
 
-      {children}
+      <main className="w-full flex-1 flex flex-col items-center justify-center z-10">
+        {children}
+      </main>
 
       <Footer onOpen={setModal} infoText={setInfoText} />
 

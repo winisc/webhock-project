@@ -5,6 +5,8 @@ import { socketService } from "../../../service/socket";
 import type { World } from "../../../types/pages";
 import darkImg from "../../assets/dark.png";
 import lightImg from "../../assets/light.png";
+import Input from "../../components/Input";
+import Button from "../../components/Button";
 
 export default function CreateRoom() {
   const navigate = useNavigate();
@@ -47,57 +49,54 @@ export default function CreateRoom() {
 
   return (
     <Page title="Create">
-      <div className="flex flex-col gap-4 justify-center items-center">
-        <p className="text-white text-lg">New room</p>
+      <div className="flex flex-col gap-8 w-full max-w-xs items-center justify-center">
+        <p className="text-white text-lg font-bold tracking-widest uppercase mb-4">New room</p>
 
-        <input
-          placeholder="Your name"
+        <Input
+          placeholder="YOUR NAME"
           value={name}
           onChange={(e) => setName(e.target.value)}
           onKeyDown={(e) => e.key === "Enter" && handleCreateRoom()}
-          className="rounded-full bg-[#383838] sm:w-100 w-80 py-1.5 text-lg text-[#F1F1F1] shadow-lg hover:bg-[#4D4D4D] pl-4 focus:outline-none focus:ring-2 focus:ring-white"
         />
 
-        <div className="flex flex-col w-full justify-start gap-2">
-          <p className="text-white text-lg">Select world:</p>
+        <div className="flex flex-col w-full justify-start gap-4">
+          <p className="text-white/60 text-xs tracking-widest uppercase">Select world</p>
 
-          <div className="flex gap-3">
+          <div className="flex gap-4 justify-center">
             {(["dark", "light"] as World[]).map((world) => (
-              <div className="flex flex-col gap-2">
+              <div key={world} className="flex flex-col gap-3 items-center">
                 <button
-                  key={world}
                   onClick={() => setSelectedWorld(world)}
                   className={`
-                    cursor-pointer h-28 w-24 rounded-xs flex justify-center items-center
-                    shadow-lg transition-all duration-200
+                    cursor-pointer h-24 w-24 flex justify-center items-center
+                    transition-all duration-200 border
                     ${
                       selectedWorld === world
-                        ? "bg-[#0a0a0a] border-2 border-white scale-105"
-                        : "bg-[#0a0a0a] border border-[#4D4D4D] opacity-60 hover:opacity-100"
+                        ? "border-white bg-white/10"
+                        : "border-transparent opacity-40 hover:opacity-100 hover:border-white/30"
                     }
                   `}
                 >
                   <img
                     src={worldImages[world]}
                     alt={`${world} world`}
-                    className={`transition-all duration-200 rounded-md pixelated
-                    ${selectedWorld === world ? "h-24 w-24" : "h-20 w-20 opacity-60 hover:opacity-100"}
-                    
+                    className={`transition-all duration-200 pixelated
+                    ${selectedWorld === world ? "h-20 w-20 grayscale-0" : "h-16 w-16 grayscale opacity-50"}
                   `}
                   />
                 </button>
-                <p
+                <div
                   className={`
-                    capitalize shadow-lg text-sm text-center
+                    text-xs uppercase tracking-widest
                     ${
                       selectedWorld === world
-                        ? " text-white scale-105"
-                        : "opacity-0"
+                        ? "text-white"
+                        : "text-transparent"
                     }
                   `}
                 >
                   {selectedWorld}
-                </p>
+                </div>
               </div>
             ))}
           </div>
@@ -105,7 +104,7 @@ export default function CreateRoom() {
 
         <div className="h-6 flex items-center justify-center">
           <p
-            className={`text-red-400 text-sm transition-opacity duration-200 ${
+            className={`text-white border-b border-white text-xs tracking-widest uppercase transition-opacity duration-200 ${
               error ? "opacity-100" : "opacity-0"
             }`}
           >
@@ -113,21 +112,23 @@ export default function CreateRoom() {
           </p>
         </div>
 
-        <button
-          onClick={handleCreateRoom}
-          disabled={loading || !name.trim()}
-          className="rounded-full bg-[#383838] sm:w-100 w-80 py-1.5 text-lg text-[#F1F1F1] shadow-lg hover:bg-[#4D4D4D] cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
-        >
-          {loading ? "Creating..." : "Create room"}
-        </button>
+        <div className="flex flex-col gap-4 w-full">
+          <Button
+            onClick={handleCreateRoom}
+            disabled={loading || !name.trim()}
+            className="w-full disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            {loading ? "Creating..." : "Create room"}
+          </Button>
 
-        <button
-          onClick={() => navigate("/")}
-          disabled={loading}
-          className="rounded-full bg-[#383838] sm:w-100 w-80 py-1.5 text-lg text-[#F1F1F1] shadow-lg hover:bg-[#4D4D4D] cursor-pointer disabled:opacity-50"
-        >
-          Back
-        </button>
+          <Button
+            onClick={() => navigate("/")}
+            disabled={loading}
+            className="w-full disabled:opacity-50"
+          >
+            Back
+          </Button>
+        </div>
       </div>
     </Page>
   );

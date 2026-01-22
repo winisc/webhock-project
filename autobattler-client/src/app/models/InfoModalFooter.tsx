@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import type { InfoModal } from "../types/infoModal";
+import type { InfoModal } from "../../types/infoModal";
 
 function InfoModalFooter({ onClose, type, children }: InfoModal) {
   const title =
@@ -21,22 +21,24 @@ function InfoModalFooter({ onClose, type, children }: InfoModal) {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center">
       <div
-        className="absolute inset-0 bg-black/60 backdrop-blur-sm"
+        className="absolute inset-0 bg-black/80 backdrop-blur-sm"
         onClick={onClose}
       />
 
-      <div className="relative z-10 w-[90%] max-w-md rounded-lg bg-[#1A1A1A] p-6 shadow-2xl">
-        <div className="flex items-center justify-between mb-4">
-          <h2 className="text-[#F1F1F1] text-lg font-medium">{title}</h2>
+      <div className="relative z-10 w-[90%] max-w-md bg-black px-8 py-6 border border-white max-h-[80vh] overflow-y-auto">
+        <div className="flex items-center justify-between mb-6 border-b border-white pb-2">
+          <h2 className="text-white text-lg font-bold uppercase tracking-widest">{title}</h2>
           <button
             onClick={onClose}
-            className="text-gray-400 hover:text-white transition text-xl leading-none cursor-pointer"
+            className="text-white hover:opacity-100 opacity-60 transition text-2xl leading-none cursor-pointer pb-1"
           >
             ×
           </button>
         </div>
 
-        <div className="text-sm text-gray-300 leading-relaxed">{children}</div>
+        <div className="text-sm text-white/80 leading-relaxed space-y-2 font-light">
+          {children}
+        </div>
       </div>
     </div>
   );

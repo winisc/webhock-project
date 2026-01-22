@@ -32,8 +32,8 @@ export default function App() {
   if (failed) {
     return (
       <Page title="Not connected">
-        <div className="flex min-h-screen items-center justify-center text-red-400">
-          Could not connect to server. Please try again later.
+        <div className="flex h-full min-h-[50vh] items-center justify-center text-white/50 tracking-widest uppercase text-sm">
+          Could not connect to server
         </div>
       </Page>
     );
@@ -41,9 +41,9 @@ export default function App() {
 
   if (!connected) {
     return (
-      <Page title="Connecting to server...">
-        <div className="flex min-h-screen items-center justify-center text-white">
-          Connecting to server...
+      <Page title="Connecting...">
+        <div className="flex h-full min-h-[50vh] items-center justify-center text-white/50 tracking-widest uppercase text-sm animate-pulse">
+          Connecting...
         </div>
       </Page>
     );

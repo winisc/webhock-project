@@ -7,16 +7,16 @@ interface FooterProps {
 
 function Footer({ onOpen, infoText }: FooterProps) {
   return (
-    <footer className="absolute bottom-0 left-0 w-full px-6 py-4 flex items-center justify-between text-sm text-gray-500">
-      <span>© {new Date().getFullYear()} Light and Dark Battle</span>
+    <footer className="absolute bottom-0 left-0 w-full px-8 py-6 flex items-center justify-between text-xs tracking-widest text-white/40 uppercase z-20">
+      <span>© {new Date().getFullYear()} L&D</span>
 
-      <div className="flex gap-4">
+      <div className="flex gap-6">
         <button
           onClick={() => {
             onOpen("privacy");
             infoText(informationsModal.privacy);
           }}
-          className="hover:text-[#F1F1F1] transition cursor-pointer"
+          className="hover:text-white transition-colors duration-200 cursor-pointer"
         >
           Privacy
         </button>
@@ -26,7 +26,7 @@ function Footer({ onOpen, infoText }: FooterProps) {
             onOpen("terms");
             infoText(informationsModal.terms);
           }}
-          className="hover:text-[#F1F1F1] transition cursor-pointer"
+          className="hover:text-white transition-colors duration-200 cursor-pointer"
         >
           Terms
         </button>
@@ -36,7 +36,7 @@ function Footer({ onOpen, infoText }: FooterProps) {
             onOpen("help");
             infoText(informationsModal.help);
           }}
-          className="hover:text-[#F1F1F1] transition cursor-pointer"
+          className="hover:text-white transition-colors duration-200 cursor-pointer"
         >
           Help
         </button>
